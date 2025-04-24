@@ -1,0 +1,31 @@
+name: Docker Compose CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Lấy mã nguồn
+      - uses: actions/checkout@v4
+
+      # 2. Thiết lập Docker Buildx (hỗ trợ build nâng cao)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # 3. Kiểm tra phiên bản Docker Compose để chắc chắn có Compose V2
+      - name: Check Docker Compose version
+        run: docker compose version
+
+      # 4. Build toàn bộ services định nghĩa trong docker-compose.yml
+      - name: Build services using Docker Compose
+        run: docker compose build
+
+      # 5. (Tuỳ chọn) Run Docker Compose nếu bạn muốn khởi động services lên để test
+      # - name: Start services
+      #   run: docker compose up -d
