@@ -1,0 +1,37 @@
+services:
+  furniturestorebe:
+    image: ${DOCKER_REGISTRY-}furniturestorebe
+    container_name: furniturestorebe
+    build:
+      context: .
+      dockerfile: FurnitureStoreBE/Dockerfile
+    ports:
+         - "5000:5000"
+         - "5001:5001"
+
+  furniturestorebe.database:
+    image: postgres:latest
+    container_name: furniturestorebe.database
+    environment:
+        - POSTGRES_DB=FurnitureStore
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=lhs00000
+    ports:
+        - 5432:5432 
+    volumes:
+      - db-data:/var/lib/postgresql/data
+  redis:
+    image: redis:latest
+    container_name: redis-containers
+    ports: 
+        - "6379:6379"
+    volumes:
+        - redis-data:/data
+
+volumes:
+  db-data:
+    name: furnitureStoreBE
+  redis-data:
+
+     
+    
