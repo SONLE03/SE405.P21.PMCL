@@ -224,7 +224,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    //DatabaseMigrationUtil.DataBaseMigrationInstallation(app);
+    DatabaseMigrationUtil.DataBaseMigrationInstallation(app);
 }
 using (var scope = app.Services.CreateScope())
 {
