@@ -8,5 +8,8 @@
         public const string IMAGE = "/image";
 
         public const string AUTH = VERSION + "/auth";
+        public const string USER = VERSION + "/user";
+        public const string STAFF = VERSION + "/staff";
+        public const string CUSTOMER = VERSION + "/customer";
     }
 }
