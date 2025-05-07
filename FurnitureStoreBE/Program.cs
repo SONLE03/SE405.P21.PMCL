@@ -1,15 +1,20 @@
+using CloudinaryDotNet;
 using FurnitureStoreBE.Configurations;
 using FurnitureStoreBE.Data;
 using FurnitureStoreBE.Models;
 using FurnitureStoreBE.Services;
 using FurnitureStoreBE.Services.Authentication;
+using FurnitureStoreBE.Services.Caching;
+using FurnitureStoreBE.Services.FileUploadService;
 using FurnitureStoreBE.Services.MailService;
 using FurnitureStoreBE.Services.Token;
+using FurnitureStoreBE.Services.UserService;
 using FurnitureStoreBE.Utils;
 using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
@@ -190,6 +195,17 @@ builder.Services.AddAuthorization(options =>
     // Report claims policies
     options.AddPolicy("CreateReportPolicy", policy => policy.RequireClaim("CreateReport"));
 });
+
+
+builder.Services.AddSingleton<Cloudinary>(serviceProvider =>
+{
+    var cloudinarySettings = serviceProvider.GetRequiredService<IOptions<CloudinarySettings>>().Value;
+    var account = new Account(cloudinarySettings.CloudName, cloudinarySettings.ApiKey, cloudinarySettings.ApiSecret);
+    return new Cloudinary(account);
+});
+
+builder.Services.AddAutoMapper(typeof(Program));
+
 var redisConnectionString = ConnectionHelper.GetRedisConnectionString(builder.Configuration);
 var options = ConfigurationOptions.Parse(redisConnectionString);
 options.AbortOnConnectFail = false; // Allow retry if connection fails
@@ -209,12 +225,16 @@ catch (Exception ex)
 
 builder.Services.AddHttpClient();
 
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
+builder.Services.AddScoped<IFileUploadService, FileUploadServiceImp>();
 
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.AddTransient<IMailService, MailServiceImp>();
 builder.Services.AddScoped<IAuthService, AuthServiceImp>();
 builder.Services.AddScoped<ITokenService, TokenServiceImp>();
 builder.Services.AddScoped<JwtUtil>();
+builder.Services.AddScoped<IRedisCacheService, RedisCacheServiceImp>();
+builder.Services.AddScoped<IUserService, UserServiceImp>();
 
 
 var app = builder.Build();
@@ -224,7 +244,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    DatabaseMigrationUtil.DataBaseMigrationInstallation(app);
+    //DatabaseMigrationUtil.DataBaseMigrationInstallation(app);
 }
 using (var scope = app.Services.CreateScope())
 {
