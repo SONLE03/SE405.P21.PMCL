@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FurnitureStoreBE.DTOs.Response.BrandResponse;
+using FurnitureStoreBE.DTOs.Response.CouponResponse;
 using FurnitureStoreBE.DTOs.Response.ProductResponse;
 using FurnitureStoreBE.DTOs.Response.UserResponse;
 using FurnitureStoreBE.Models;
@@ -36,6 +37,10 @@ namespace FurnitureStoreBE.Mapper
                 .ForMember(dest => dest.BrandName, otp => otp.MapFrom(src => src.Brand.BrandName))
                 .ForMember(dest => dest.DisplayPrice, otp => otp.MapFrom(src => $"{src.MinPrice} - {src.MaxPrice}"))
                 .ForMember(dest => dest.ProductVariants, otp => otp.MapFrom(src => src.ProductVariants));
+            CreateMap<Coupon, CouponResponse>()
+               .ForMember(dest => dest.ImageSource, otp => otp.MapFrom(src => src.Asset.URL))
+               .ForMember(dest => dest.ECouponStatus, otp => otp.MapFrom(src => src.ECouponStatus.ToString()))
+               .ForMember(dest => dest.ECouponType, otp => otp.MapFrom(src => src.ECouponType.ToString()));
         }
     }
 }
