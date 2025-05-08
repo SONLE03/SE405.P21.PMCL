@@ -5,6 +5,7 @@ using FurnitureStoreBE.Models;
 using FurnitureStoreBE.Services;
 using FurnitureStoreBE.Services.Authentication;
 using FurnitureStoreBE.Services.Caching;
+using FurnitureStoreBE.Services.CouponService;
 using FurnitureStoreBE.Services.FileUploadService;
 using FurnitureStoreBE.Services.MailService;
 using FurnitureStoreBE.Services.ProductService.BrandService;
@@ -253,6 +254,7 @@ builder.Services.AddScoped<ICategoryService, CategoryServiceImp>();
 builder.Services.AddScoped<IColorService, ColorServiceImp>();
 builder.Services.AddScoped<IProductService, ProductServiceImp>();
 builder.Services.AddScoped<IFavoriteProductService, FavoriteProductServiceImp>();
+builder.Services.AddScoped<ICouponService, CouponServiceImp>();
 
 
 var app = builder.Build();
@@ -268,6 +270,7 @@ using (var scope = app.Services.CreateScope())
 {
     await DataHelper.ManageDataAsync(scope.ServiceProvider);
     AppUserSeeder.SeedRootAdminUser(scope, app);
+
 }
 
 app.UseCors(x => x
