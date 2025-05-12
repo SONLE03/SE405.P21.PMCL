@@ -23,6 +23,7 @@
         public const string PRODUCTVARIANT = VERSION + "/productVariant";
         public const string FAVORITE = VERSION + "/favorite";
         public const string COUPON = VERSION + "/coupon";
-
+        public const string REVIEW = VERSION + "/review";
+        public const string QUESTION = VERSION + "/question";
     }
 }
