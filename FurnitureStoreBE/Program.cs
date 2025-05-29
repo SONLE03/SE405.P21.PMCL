@@ -7,6 +7,7 @@ using FurnitureStoreBE.Services.Authentication;
 using FurnitureStoreBE.Services.Caching;
 using FurnitureStoreBE.Services.CouponService;
 using FurnitureStoreBE.Services.FileUploadService;
+using FurnitureStoreBE.Services.ImportService;
 using FurnitureStoreBE.Services.MailService;
 using FurnitureStoreBE.Services.ProductService.BrandService;
 using FurnitureStoreBE.Services.ProductService.CategoryService;
@@ -259,6 +260,8 @@ builder.Services.AddScoped<IFavoriteProductService, FavoriteProductServiceImp>()
 builder.Services.AddScoped<ICouponService, CouponServiceImp>();
 builder.Services.AddScoped<IReviewService, ReviewServiceImp>();
 builder.Services.AddScoped<IQuestionService, QuestionServiceImp>();
+builder.Services.AddScoped<IImportService, ImportServiceImp>();
+
 
 var app = builder.Build();
 
@@ -284,4 +287,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.UseExceptionHandler(opt => { });
+app.UseMiddleware<LoggingMiddleware>();
+app.UseMiddleware<HeaderCheckMiddleware>();
 app.Run();
