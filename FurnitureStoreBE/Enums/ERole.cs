@@ -4,6 +4,7 @@
     {
         Owner = 1,
         Staff = 2,
-        Customer = 3
+        Customer = 3,
+        Shipper = 4 
     }
 }

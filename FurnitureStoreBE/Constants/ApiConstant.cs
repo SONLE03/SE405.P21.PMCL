@@ -10,6 +10,7 @@
         public const string AUTH = VERSION + "/auth";
         public const string USER = VERSION + "/user";
         public const string STAFF = VERSION + "/staff";
+        public const string SHIPPER = VERSION + "/shipper";
         public const string CUSTOMER = VERSION + "/customer";
 
         public const string ROOMSPACE = VERSION + "/roomspace";
