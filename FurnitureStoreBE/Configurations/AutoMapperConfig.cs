@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FurnitureStoreBE.DTOs.Response.BrandResponse;
 using FurnitureStoreBE.DTOs.Response.CouponResponse;
+using FurnitureStoreBE.DTOs.Response.ImportResponse;
 using FurnitureStoreBE.DTOs.Response.ProductResponse;
 using FurnitureStoreBE.DTOs.Response.QuestionResponse;
 using FurnitureStoreBE.DTOs.Response.ReplyResponses;
@@ -60,6 +61,10 @@ namespace FurnitureStoreBE.Mapper
                 .ForMember(dest => dest.Role, otp => otp.MapFrom(src => src.User.Role))
                 .ForMember(dest => dest.UpdatedDate, otp => otp.MapFrom(src => src.UpdatedDate))
                 .ForMember(dest => dest.ReplyResponses, otp => otp.MapFrom(src => src.Reply));
+            CreateMap<ImportInvoice, ImportResponse>()
+                .ForMember(dest => dest.ImportItemResponse, otp => otp.MapFrom(src => src.ImportItem));
+            CreateMap<ImportItem, ImportItemResponse>()
+                .ForMember(dest => dest.ProductName, otp => otp.MapFrom(src => src.ProductVariant.Product.ProductName));
         }
     }
 }
