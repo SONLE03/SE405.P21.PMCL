@@ -6,7 +6,6 @@
         Paid,
         Confirmed,
         Canceled,
-        DeliveryToShipper,
         Delivering,
         Completed,
         ReturnGoods,

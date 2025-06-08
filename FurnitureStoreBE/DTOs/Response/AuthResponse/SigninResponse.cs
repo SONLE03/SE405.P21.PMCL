@@ -1,5 +1,8 @@
-﻿namespace FurnitureStoreBE.DTOs.Response.AuthResponse
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FurnitureStoreBE.DTOs.Response.AuthResponse
 {
+   
     public class SigninResponse
     {
         public string AccessToken { get; set; }

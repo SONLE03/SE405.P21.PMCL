@@ -15,7 +15,8 @@ namespace FurnitureStoreBE.DTOs.Response.OrderResponse
         public string? Note { get; set; }
         public decimal ShippingFee { get; set; } = 30000;
         public string OrderStatus { get; set; } = EOrderStatus.Pending.ToString();
-
+        public string ShipperId { get; set; }   
+        public string ShipperFullName { get; set; }
         public string UserId { get; set; }
         public string FullName {  get; set; }
         public AddressResponse Address { get; set; }

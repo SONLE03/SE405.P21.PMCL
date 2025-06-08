@@ -441,6 +441,12 @@ namespace FurnitureStoreBE.Data
                     Id = "3", // Unique identifier for the role
                     Name = "Customer",
                     NormalizedName = "CUSTOMER"
+                },
+                new IdentityRole
+                {
+                    Id = "4",
+                    Name = "Shipper",
+                    NormalizedName = "SHIPPER"
                 }
             );
 

@@ -68,6 +68,12 @@ namespace FurnitureStoreBE.Services.OrderService
                     OrderStatus = EOrderStatus.Pending,
                     AccountsReceivable = orderRequest.Total,
                 };
+                var orderStatus = new OrderStatus
+                {
+                    OrderId = order.Id,
+                    Note = orderRequest.Note,
+                };
+                orderStatus.setCommonCreate(UserSession.GetUserId());
                 order.setCommonCreate(UserSession.GetUserId());
                 foreach (var item in orderItems)
                 {
@@ -151,6 +157,7 @@ namespace FurnitureStoreBE.Services.OrderService
                     throw new ObjectNotFoundException("Order not found");
                 }
                 order.OrderStatus = updateOrderStatusRequest.EOrderStatus;
+                order.ShipperId = updateOrderStatusRequest.ShipperId;
                 var orderStatus = new OrderStatus
                 {
                     Order = order,

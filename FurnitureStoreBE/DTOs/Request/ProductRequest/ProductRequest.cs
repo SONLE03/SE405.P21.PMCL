@@ -23,8 +23,7 @@ namespace FurnitureStoreBE.DTOs.Request.ProductRequest
         public HashSet<Guid>? MaterialsId { get; set; }
         [Required(ErrorMessage = "Product variants are required.")]
         public HashSet<ProductVariantRequest>? ProductVariants { get; set; }
-        [MinValue(0.0)]
-        public decimal? Discount { get; set; }
+        public decimal? Discount { get; set; } = 0;
     }
     public class ProductVariantRequest
     {
@@ -40,10 +39,7 @@ namespace FurnitureStoreBE.DTOs.Request.ProductRequest
         [MinValue(0.0)]
 
         public decimal Height { get; set; }
-        [Required(ErrorMessage = "Quantity is required.")]
-        [Range(0, int.MaxValue, ErrorMessage = "The quantity must be greater than or equal to {1}.")]
-
-        public long Quantity { get; set; }
+        public long Quantity { get; set; } = 0;
         [Required(ErrorMessage = "Price is required.")]
         [MinValue(0.0)]
 
