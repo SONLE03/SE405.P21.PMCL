@@ -4,6 +4,7 @@ using FurnitureStoreBE.Data;
 using FurnitureStoreBE.Models;
 using FurnitureStoreBE.Services;
 using FurnitureStoreBE.Services.Authentication;
+using FurnitureStoreBE.Services.BackService;
 using FurnitureStoreBE.Services.Caching;
 using FurnitureStoreBE.Services.CartService;
 using FurnitureStoreBE.Services.CouponService;
@@ -26,12 +27,14 @@ using FurnitureStoreBE.Services.Token;
 using FurnitureStoreBE.Services.UserService;
 using FurnitureStoreBE.Utils;
 using Hangfire;
+using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Npgsql;
 using StackExchange.Redis;
 using System.Text;
 
@@ -268,6 +271,20 @@ builder.Services.AddScoped<IQuestionService, QuestionServiceImp>();
 builder.Services.AddScoped<IImportService, ImportServiceImp>();
 builder.Services.AddScoped<IOrderItemService, OrderItemServiceImp>();
 builder.Services.AddScoped<IOrderService, OrderServiceImp>();
+builder.Services.AddScoped<IBackupService, PostgresBackupService>();
+builder.Services.AddScoped<ScheduledTasks>();
+
+builder.Services.AddHangfire(config =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+    config.UsePostgreSqlStorage(options =>
+    {
+        options.UseNpgsqlConnection(connectionString);
+    });
+});
+
+builder.Services.AddHangfireServer();
 
 var app = builder.Build();
 
@@ -282,7 +299,14 @@ using (var scope = app.Services.CreateScope())
 {
     await DataHelper.ManageDataAsync(scope.ServiceProvider);
     AppUserSeeder.SeedRootAdminUser(scope, app);
+    var recurringJobManager = scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
+    var scheduledTasks = scope.ServiceProvider.GetRequiredService<ScheduledTasks>();
 
+    recurringJobManager.AddOrUpdate(
+        "PostgresBackupJob",
+        () => scheduledTasks.BackupPostgresDatabase(),
+        Cron.Daily(2) // chạy lúc 2:00 sáng mỗi ngày
+    );
 }
 
 app.UseCors(x => x
@@ -295,4 +319,5 @@ app.MapControllers();
 app.UseExceptionHandler(opt => { });
 app.UseMiddleware<LoggingMiddleware>();
 app.UseMiddleware<HeaderCheckMiddleware>();
+app.UseHangfireDashboard("/hangfire");
 app.Run();

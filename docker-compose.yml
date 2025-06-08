@@ -10,7 +10,7 @@ services:
          - "5001:5001"
 
   furniturestorebe.database:
-    image: postgres:latest
+    image: postgres:15
     container_name: furniturestorebe.database
     environment:
         - POSTGRES_DB=FurnitureStore

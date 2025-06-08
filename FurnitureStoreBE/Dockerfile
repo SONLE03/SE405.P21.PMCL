@@ -7,6 +7,10 @@ WORKDIR /app
 EXPOSE 5000
 EXPOSE 5001
 
+USER root
+RUN apt-get update && apt-get install -y postgresql-client && rm -rf /var/lib/apt/lists/*
+
+USER app
 
 # This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
