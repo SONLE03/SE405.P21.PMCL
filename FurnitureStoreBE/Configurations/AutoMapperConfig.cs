@@ -2,6 +2,7 @@
 using FurnitureStoreBE.DTOs.Response.BrandResponse;
 using FurnitureStoreBE.DTOs.Response.CouponResponse;
 using FurnitureStoreBE.DTOs.Response.ImportResponse;
+using FurnitureStoreBE.DTOs.Response.OrderResponse;
 using FurnitureStoreBE.DTOs.Response.ProductResponse;
 using FurnitureStoreBE.DTOs.Response.QuestionResponse;
 using FurnitureStoreBE.DTOs.Response.ReplyResponses;
@@ -65,6 +66,13 @@ namespace FurnitureStoreBE.Mapper
                 .ForMember(dest => dest.ImportItemResponse, otp => otp.MapFrom(src => src.ImportItem));
             CreateMap<ImportItem, ImportItemResponse>()
                 .ForMember(dest => dest.ProductName, otp => otp.MapFrom(src => src.ProductVariant.Product.ProductName));
+            CreateMap<Order, OrderResponse>()
+                .ForMember(dest => dest.PaymentMethod, otp => otp.MapFrom(src => src.PaymentMethod.ToString()))
+                .ForMember(dest => dest.OrderStatus, otp => otp.MapFrom(src => src.OrderStatus.ToString()))
+                .ForMember(dest => dest.OrderItemResponses, otp => otp.MapFrom(src => src.OrderItems));
+            CreateMap<OrderItem, OrderItemResponse>()
+               .ForMember(dest => dest.ColorName, otp => otp.MapFrom(src => src.Color.ColorName))
+               .ForMember(dest => dest.ProductName, otp => otp.MapFrom(src => src.Product.ProductName));
         }
     }
 }

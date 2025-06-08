@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FurnitureStoreBE.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20250424180727_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250531111451_InitDb")]
+    partial class InitDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -756,6 +756,9 @@ namespace FurnitureStoreBE.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("ShipperId")
+                        .HasColumnType("text");
+
                     b.Property<decimal>("ShippingFee")
                         .HasColumnType("decimal(18,2)");
 
@@ -1383,6 +1386,12 @@ namespace FurnitureStoreBE.Migrations
                             Id = "3",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
+                        },
+                        new
+                        {
+                            Id = "4",
+                            Name = "Shipper",
+                            NormalizedName = "SHIPPER"
                         });
                 });
 

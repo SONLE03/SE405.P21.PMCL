@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FurnitureStoreBE.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -476,6 +476,7 @@ namespace FurnitureStoreBE.Migrations
                     ShippingFee = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     OrderStatus = table.Column<int>(type: "integer", nullable: false),
                     CouponId = table.Column<Guid>(type: "uuid", nullable: true),
+                    ShipperId = table.Column<string>(type: "text", nullable: true),
                     UserId = table.Column<string>(type: "text", nullable: false),
                     AddressId = table.Column<Guid>(type: "uuid", nullable: false),
                     TaxFee = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
@@ -984,7 +985,8 @@ namespace FurnitureStoreBE.Migrations
                 {
                     { "1", null, "Owner", "OWNER" },
                     { "2", null, "Staff", "STAFF" },
-                    { "3", null, "Customer", "CUSTOMER" }
+                    { "3", null, "Customer", "CUSTOMER" },
+                    { "4", null, "Shipper", "SHIPPER" }
                 });
 
             migrationBuilder.InsertData(

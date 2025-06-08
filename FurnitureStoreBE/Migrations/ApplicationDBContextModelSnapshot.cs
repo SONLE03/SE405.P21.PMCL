@@ -753,6 +753,9 @@ namespace FurnitureStoreBE.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("ShipperId")
+                        .HasColumnType("text");
+
                     b.Property<decimal>("ShippingFee")
                         .HasColumnType("decimal(18,2)");
 
@@ -1380,6 +1383,12 @@ namespace FurnitureStoreBE.Migrations
                             Id = "3",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
+                        },
+                        new
+                        {
+                            Id = "4",
+                            Name = "Shipper",
+                            NormalizedName = "SHIPPER"
                         });
                 });
 

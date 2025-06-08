@@ -42,7 +42,10 @@ if (port != null)
 {
     builder.WebHost.UseUrls($"http://*:{port}");
 }
-
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5001); // Lắng nghe HTTP ở cổng 5001
+});
 
 // Add services to the container.
 
