@@ -3,6 +3,7 @@ using FurnitureStoreBE.Configurations;
 using FurnitureStoreBE.Data;
 using FurnitureStoreBE.Models;
 using FurnitureStoreBE.Services;
+using FurnitureStoreBE.Services.AnalyticsService;
 using FurnitureStoreBE.Services.Authentication;
 using FurnitureStoreBE.Services.BackService;
 using FurnitureStoreBE.Services.Caching;
@@ -272,6 +273,7 @@ builder.Services.AddScoped<IImportService, ImportServiceImp>();
 builder.Services.AddScoped<IOrderItemService, OrderItemServiceImp>();
 builder.Services.AddScoped<IOrderService, OrderServiceImp>();
 builder.Services.AddScoped<IBackupService, PostgresBackupService>();
+builder.Services.AddScoped<IAnalysisService, AnalysisServiceImp>();
 builder.Services.AddScoped<ScheduledTasks>();
 
 builder.Services.AddHangfire(config =>

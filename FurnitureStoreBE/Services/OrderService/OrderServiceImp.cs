@@ -151,7 +151,9 @@ namespace FurnitureStoreBE.Services.OrderService
             await using var transaction = await _dbContext.Database.BeginTransactionAsync();
             try
             {
-                var order = await _dbContext.Orders.SingleOrDefaultAsync(o => o.Id == orderId);
+                var order = await _dbContext.Orders
+                    .Include(o => o.OrderItems)
+                    .SingleOrDefaultAsync(o => o.Id == orderId);
                 if (order == null)
                 {
                     throw new ObjectNotFoundException("Order not found");

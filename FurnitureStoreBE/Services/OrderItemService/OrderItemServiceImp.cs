@@ -65,7 +65,7 @@ namespace FurnitureStoreBE.Services.CartService
                     .Where(ot => ot.UserId == userId
                             && ot.ColorId == colorId
                             && ot.Dimension.Equals(dimension)
-                            && ot.ProductId == productId)
+                            && ot.ProductId == productId && ot.CartId != null)
                     .SingleOrDefaultAsync();
                 if (existOrderItem != null)
                 {

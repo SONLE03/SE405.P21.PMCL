@@ -29,6 +29,7 @@
         public const string IMPORT = VERSION + "/import";
         public const string CART = VERSION + "/cart";
         public const string ORDER = VERSION + "/order";
+        public const string ANALYSIS = VERSION + "/analysis";
 
 
     }

@@ -80,6 +80,8 @@ namespace FurnitureStoreBE.Services.Authentication
                     Email = email,
                     UserName = email,
                     Role = defaultRoleRegister,
+                    FullName = register.FullName,
+                    PhoneNumber = register.Phone,
                     Cart = new Cart()
                 };
 
