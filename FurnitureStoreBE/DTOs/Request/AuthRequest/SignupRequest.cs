@@ -12,5 +12,7 @@ namespace FurnitureStoreBE.DTOs.Request.Auth
         @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&*()_+!]).{8,}$",
         ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, one digit, one special character, and be at least 8 characters long.")]
         public string Password { get; set; }
+        public string Phone { get; set; }
+        public string FullName { get; set; }
     }
 }
